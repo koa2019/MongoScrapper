@@ -1,8 +1,8 @@
 // dependencies
-require("dotenv").config();
+require('dotenv').config();
 var express = require('express');
-var logger = require("morgan");
-var mongoose = require("mongoose");
+var logger = require('morgan');
+var mongoose = require('mongoose');
 
 // necessary for scraping html parsing & scraping
 var axios = require('axios');
@@ -31,16 +31,15 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // connect mongoose to Mongo db
-// mongoose.connect('mongodb://localhost/mongoHeadlines', { useNewUrlParser: true });
-
 // If deployed, use the deployed database, connect mongoose to remote mongolab database.
 // Otherwise use the local mongoHeadlines database
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+// mongoose.connect('mongodb://localhost/mongoHeadlines', { useNewUrlParser: true });
+var MONGODB_URI = process.env.MONGODB_URI ||'mongodb://localhost/mongoHeadlines';
 
 mongoose.connect(MONGODB_URI);
 
 
-//             ROUTES 
+//   ROUTES 
 
 // gets all json from returned data from the GET call to news url
 app.get('/scrape', function(req, res) {
@@ -50,14 +49,15 @@ app.get('/scrape', function(req, res) {
     axios.get(url)
         .then(function(response) {
 
-            // Load the HTML into cheerio and save it to a variable
             // '$' shorthand for cheerio's selector commands, similar to jQuery's '$'
+            // Load HTML into cheerio and save it to a variable
             var $ = cheerio.load(response.data);
 
             // Select each element in the HTML body from which you want information.
             $('.post').each(function(i, element) {
 
                 var result = {};
+                var incompleteResults = [];
 
                 // capture data from these html elements
                 var headline = $(element).children().find('a').text();
@@ -71,8 +71,16 @@ app.get('/scrape', function(req, res) {
                     result.summary = summary;
                     result.thumbnail = thumbnail;
                     result.link = link;
+                }
+                else {
+                    incompleteResults.push({ 
+                        headline: headline,
+                        summary: summary,
+                        thumbnail: thumbnail,
+                        link: link
+                    }); 
                 };
-                console.log(results);
+                // console.log(result);
 
                 db.Article.create(result)
                     .then(dbArticle => console.log(dbArticle))
@@ -84,14 +92,31 @@ app.get('/scrape', function(req, res) {
 });
 
 // Route for all Articles in db
-app.get('/articles', function(req, res) {
+app.get('/articles', (req, res) => {
     db.Article.find({})
-        .then(function(dbArticle) {
-            res.json(dbArticle);
-        })
-        .catch(function(err) {
-            res.json(err);
-        });
+    .then(dbArticle => res.json(dbArticle))
+    .catch(err => res.json(err));
+});
+
+// route to retreieve one article by id passed from req.params & populate with all Notes associated with article id
+app.get('/articles/:id', (req, res) => {
+
+    // findOne Articles documents in db 
+    db.Article.findOne({ _id: req.params.id})
+    .populate('note')
+    .then(dbArticle => res.json(dbArticle))
+    .catch(err => res.json(err));
+});
+
+// route to save/update a Note associated with Article id in db
+app.post('/articles/:id', (req, res) => { 
+
+    // create a new Note with data from req.body
+    db.Note.create(req.body)
+    // if successfully created in db then return find & update Article with 3 obj params (article id, note id & new: true)
+    // new: true will return updated
+    .then(dbNote => { return db.Article.findAndUpdate({_id: req.params.id}, {note: dbNote.id}, {new:true}) })
+    .catch(err => res.json(err));
 });
 
 // initiate server to start listening for HTTP requests
