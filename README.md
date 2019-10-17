@@ -1,15 +1,81 @@
 # MongoScrapper
-# Psudo
+# Pesudo
 
 * require dependencies
     * cheerio - parsing HTML & finding html elements.
     * axios for front end ajax calls.
     * express - server
-    * mongojs - 
+    * mongoose - node library for mongodb
 
-* declare new variable & initialize instance of express app server.
+* require all models in model folder
 
-* start express app to listen for requests
+* declare variable PORT for heroku or localhost 
+
+* declare variable app & initialize instance of express app server.
+
+* start express app to listen for http requests
+
+* configure middleware
+    * direct express instance to use morgan logger for logging requests
+    * direct express instance to use urlencoded to be able to parse request body as JSON
+    * direct express instance to use public folder as static
+
+* connect mongoose to mongo DB
+
+* configure backend server routes
+    * GET scrape route
+        * axios GET http://www.#.com/, then promise response
+            * declare variable $ & initialize cheerio to load response data
+            * loop for target html element & save into results, a new empty object
+                * declare new obj variable to store scraped data.
+
+                * Select each html element we want to target from html body within the response data & loop for each element within response.
+
+                * $('selector').each((i, element) => { 
+                     var title = $(element).children().text();
+                    var link = $(element).find("a").attr("href");
+                    });
+
+                    * Headline - the title of the article
+                    * Summary - a short summary of the article
+                    * URL - the url to the original article
+                    * thumbnail jpg - from article
+
+                * conditional to confirm there's valid data. if valid, then push object keys & values into an array.
+
+                * console obj.
+
+                * create new Article Model in database with the results obj, then console log successfully obj, catch errror
+                
+        * send a complete message to the client
+
+* server route to GET all articles from db
+    * grab all documents in Articles collection in db, then send json db results back to client, & catch send json of any errors
+
+* server route to GET article by id & populate with any notes associated with article id
+    * findOne id in db with id passed from req.params
+        * populate with all notes associated with it
+        * then if successfully send json results back to frontend
+        * catch errror & send back err as json
+
+* server route POST for saving/updating Article's associated Note
+    * db create new Note Model with req.body passed from frontend client
+        * then if dbNote successfully created, find one & update Article by id that was passed from req.params Update Article to be associated with new Note.
+        * findOneAndUpdate returns a promise so chain another .then which sends query results & catches error
+
+<!--  -->
+<!-- mongoJS psudo -->
+* require dependencies
+    * cheerio - parsing HTML & finding html elements.
+    * axios for front end ajax calls.
+    * express - server
+    * mongojs - node library for mongodb
+
+* declare variable PORT for heroku or localhost 
+
+* declare variable app & initialize instance of express app server.
+
+* start express app to listen for http requests
 
 * configure database by creating new variables that hold references to databaseUrl & collections.
 
