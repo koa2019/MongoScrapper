@@ -9,7 +9,8 @@ var axios = require('axios');
 var cheerio = require('cheerio');
 
 // require all models in model folder
-var db = require("./models");
+// var db = require("./models/Article.js");
+var db = require('./models');
 
 // set PORT for express
 // Heroku needs process.env.PORT
@@ -17,6 +18,7 @@ var PORT = process.env.PORT || 3000;
 
 // initialize an instance of express server app
 var app = express();
+
 
 //              configure middleware
 
