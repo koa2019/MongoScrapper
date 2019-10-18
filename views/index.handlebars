@@ -1,0 +1,30 @@
+{{#each articles}}
+
+<div class='card' id='{{this.id}}'>
+
+    <a class='artLink' href='{{this.link}}'>
+
+        <div class='card-header'>
+            <h4 class='artHeadline'> {{this.headline}} </h4>
+        </div>
+
+        <div class='card-body artSum'> {{this.summary}} </div>
+    </a>
+</div>
+
+{{/each}}
+
+{{!-- <ul>
+    {{#each araticles}}
+    <li>
+        <p> {{this.id}} </p>
+        <p> {{this.headline}} </p>
+        <p> {{this.summary}} </p>
+    </li>
+    {{/each}}
+</ul> --}}
+
+<script>
+    // Grab the articles as a json
+
+</script>

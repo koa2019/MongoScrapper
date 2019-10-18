@@ -12,6 +12,12 @@ var db = require("../models");
 // export this function that's passing an express server instance as an arguement
 module.exports = function (app) {
 
+    // app.get('/', (req, res) => {
+
+    //     // handlebars renders index
+    //     res.render('index', );
+    // });
+
     // gets all json from returned data from the GET call to news url
     app.get('/scrape', function (req, res) {
 
@@ -65,7 +71,10 @@ module.exports = function (app) {
     // Route for all Articles in db
     app.get('/articles', (req, res) => {
         db.Article.find({})
-            .then(dbArticle => res.json(dbArticle))
+            // handlebars renders needs page & a object
+            // .then(dbArticle => res.json(dbArticle))
+            // .then(dbArticle => res.render('index', res.json(dbArticle)))
+            .then(dbArticle => { res.render('index', {articles: dbArticle} ) })
             .catch(err => res.json(err));
     });
 
