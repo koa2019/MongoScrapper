@@ -1,15 +1,18 @@
-{{#each articles}}
+<div class='articles'>
+    {{#each articles}}
+    <div class='card card-article' data-id='{{this.id}}'>
 
-<div class='card' data-id='{{this.id}}'>
+        <a class='art-link' href='{{this.link}}'>
+            <div class='card-header'>
+                <h4 class='art-headline'> {{this.headline}} </h4>
+            </div>
+        </a>
 
-    <a class='artLink' href='{{this.link}}'>
-
-        <div class='card-header'>
-            <h4 class='artHeadline'> {{this.headline}} </h4>
+        <div class='card-body art-sum'> {{this.summary}}
+            <br>
+            <button data-saveArticle-id='{{this.id}}' class='save-article'>Save Article</button>
         </div>
-
-        <div class='card-body artSum'> {{this.summary}} </div>
-    </a>
+    </div>
+    <div id='notes'></div>
+    {{/each}}
 </div>
-
-{{/each}}

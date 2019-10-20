@@ -6,7 +6,7 @@ html {
   
 body {
     margin-bottom: 80px;
-    background-image: url("../images/paper.png");
+    background-image: url("/assets/images/newspaper-bundle.png");
 }
   
 .card a:not([href]):not([tabindex]).scrape-new {
@@ -76,7 +76,9 @@ body {
 .article-container {
     padding-bottom: 25px;
 }
-  
+#notes {
+    background: white;
+}
 .card {
     border-radius: 0;
     box-shadow: 3px 3px 20px lightslategrey;
