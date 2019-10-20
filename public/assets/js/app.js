@@ -44,7 +44,7 @@ $(document).ready(() => {
     // });
 
     function empty() {
-        $('.articles').empty();
+        $('.card-article').empty();
     }
 
 });
