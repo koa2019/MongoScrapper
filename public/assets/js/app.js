@@ -2,9 +2,11 @@ $(document).ready(() => {
 
     $('.scrape-new').on('click', event => $.get('/scrape/')
         .then(window.location.href = window.location.href)
-        .catch(err => res.sendStatus(404)));
+        .catch(err => res.sendStatus(404))
+    );
 
     $('.clearAll').on('click', event => empty());
+    // $('#save-note-btn').on('click', event => saveNote());
 
     $(document).on('click', '.card-article', function () {
         // Empty the notes from the note section
@@ -13,12 +15,15 @@ $(document).ready(() => {
         var thisId = $(this).attr("data-id");
 
         // Now make an ajax call for the Article
-        $.ajax({
-            method: "GET",
-            url: "/articles/" + thisId
-        })
+        // $.ajax({
+        //     method: "GET",
+        //     url: "/articles/" + thisId
+        // })
+        let url = "/articles/" + thisId;
+
+        $.get(url)
             // With that done, add the note information to the page
-            .then(function (data) {
+            .then(data => {
                 console.log(data);
                 // The title of the article
                 $("#notes").append("<h4>" + data.headline + "</h4>");
@@ -27,7 +32,7 @@ $(document).ready(() => {
                 // A textarea to add a new note body
                 $("#notes").append("<textarea id='bodyinput' name='body' placeholder='Notes'></textarea> ");
                 // A button to submit a new note, with the id of the article saved to it
-                $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+                $("#notes").append("<button type='button' data-id='" + data._id + "' id='save-note'>Save Note</button>");
 
                 // If there's a note in the article
                 if (data.note) {
@@ -38,10 +43,42 @@ $(document).ready(() => {
                 }
             });
     });
-    // $(document).on('click', '.save-article', function() {
-    //     let thisId = $(this).data('saveArticle-id');
-    //     console.log(thisId);
-    // });
+    // function saveNote() {
+    // $('#save-note').on('click', function () {
+    $(document).on("click", "#save-note", function () {
+
+        let thisId = $(this).attr('data-id');
+        console.log(thisId);
+        let noteData = {
+            title: $("#titleinput").val(),
+            // Value taken from note textarea
+            body: $("#bodyinput").val() 
+        }
+        console.log(noteData)
+        $.ajax({
+            method: "POST",
+            url: "/articles/" + thisId,
+            data: noteData
+            // data: {
+            //     // Value taken from title input
+            //     title: $("#titleinput").val(),
+            //     // Value taken from note textarea
+            //     body: $("#bodyinput").val()
+            // }
+        }).then(results => {
+            console.log(results)
+            $('#notes').empty();
+        }).catch(err => console.log(err));
+
+        // let url = '/articles/' + thisId;
+        // $.post(url)
+        // .then(data => console.log(data))
+        // .catch(err => {
+        //     console.log(err);
+        //     data.sendStatus(404);
+        // })
+    });
+
 
     function empty() {
         $('.card-article').empty();
