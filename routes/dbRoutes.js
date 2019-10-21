@@ -93,15 +93,15 @@ module.exports = function (app) {
     // route to save/update a Note associated with Article id in db
     app.post('/articles/:id', (req, res) => {
 
-        console.log(req.body)
+        console.log(req.body);
         // create a new Note with data from req.body
         db.Note.create(req.body)
             // if successfully created in db then return find & update Article with 3 obj params (article id, note id & new: true)
             // new: true will return updated
             .then(dbNote => { return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote.id }, { new: true }) })
             .catch(err => {
-                res.sendStatus(500)
-                console.log(err)
+                res.sendStatus(500);
+                console.log(err);
             });
     });
 

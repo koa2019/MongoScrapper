@@ -2,29 +2,31 @@ $(document).ready(() => {
 
     $('.scrape-new').on('click', event => $.get('/scrape/')
         .then(window.location.href = window.location.href)
-        .catch(err => res.sendStatus(404))
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(404)
+        })
     );
 
-    $('.clearAll').on('click', event => empty());
+    $('.clearAll').on('click', event => {
+        let targetElement = '.card-article';
+        empty(targetElement);
+    });
     // $('#save-note-btn').on('click', event => saveNote());
 
-    $(document).on('click', '.card-article', function () {
+    $(document).on('click', '#add-note', function () {
+        
         // Empty the notes from the note section
-        $("#notes").empty();
-        // Save the id from the p tag
-        var thisId = $(this).attr("data-id");
+        empty('#notes');
 
-        // Now make an ajax call for the Article
-        // $.ajax({
-        //     method: "GET",
-        //     url: "/articles/" + thisId
-        // })
+        // Save the id from the p tag
+        let thisId = $(this).attr("data-id");
         let url = "/articles/" + thisId;
 
         $.get(url)
             // With that done, add the note information to the page
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 // The title of the article
                 $("#notes").append("<h4>" + data.headline + "</h4>");
                 // An input to enter a new title
@@ -40,34 +42,34 @@ $(document).ready(() => {
                     $("#titleinput").val(data.note.title);
                     // Place the body of the note in the body textarea
                     $("#bodyinput").val(data.note.body);
-                }
+                };
             });
     });
+
     // function saveNote() {
     // $('#save-note').on('click', function () {
     $(document).on("click", "#save-note", function () {
 
         let thisId = $(this).attr('data-id');
         console.log(thisId);
+
+        let titleInput = $("#titleinput").val().trim();
+        let bodyInput =  $("#bodyinput").val().trim();
+
         let noteData = {
-            title: $("#titleinput").val(),
-            // Value taken from note textarea
-            body: $("#bodyinput").val() 
+            title: titleInput,
+            body: bodyInput
         }
         console.log(noteData)
+
         $.ajax({
             method: "POST",
             url: "/articles/" + thisId,
             data: noteData
-            // data: {
-            //     // Value taken from title input
-            //     title: $("#titleinput").val(),
-            //     // Value taken from note textarea
-            //     body: $("#bodyinput").val()
-            // }
         }).then(results => {
             console.log(results)
-            $('#notes').empty();
+            // let targetId = '#notes';
+            // empty('#notes');
         }).catch(err => console.log(err));
 
         // let url = '/articles/' + thisId;
@@ -80,8 +82,9 @@ $(document).ready(() => {
     });
 
 
-    function empty() {
-        $('.card-article').empty();
+    function empty(stringId) {
+        console.log(stringId)
+        $(stringId).empty();
     }
 
 });
