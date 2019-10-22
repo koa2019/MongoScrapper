@@ -1,5 +1,5 @@
 # MongoScrapper
-# Pesudo
+# Psuedo
 
 * require dependencies
     * cheerio - parsing HTML & finding html elements.

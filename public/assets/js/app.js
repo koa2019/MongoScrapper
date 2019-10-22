@@ -59,8 +59,6 @@ $(document).ready(() => {
             body: bodyInput
         }
         console.log(noteData);
-        // $("#titleinput").val('');
-        // $("#bodyinput").val('');
 
         $.ajax({
             method: "POST",
