@@ -1,7 +1,7 @@
 $(document).ready(() => {
 
     $('.noteDiv').hide();
-    $('.clearAll').on('click', event => empty('.card-article'));
+    $('.clearAll').on('click', event => $('.card-article').empty());
 
     $('.scrape-new').on('click', event => $.get('/scrape/')
         .then(window.location.href = window.location.href)
@@ -19,10 +19,14 @@ $(document).ready(() => {
         let thisId = $(this).attr("data-id");
         let url = "/articles/" + thisId;
 
-        //     let target =  'data-id' + thisId;
-        //    $('.noteDiv').attr(target).show();
-        $('.noteDiv').show();
+        // const selector = `div.noteDiv[data-id=${thisId}]"`;
+        // $(selector).show();
+        // const btn = $(this);
+        // const parentElementCard = btn.parents(".card-article");
+        // parentElementCard.find(".noteDiv").show();
 
+        let target = '[data-id=' + thisId + ']';
+        $(`.noteDiv${target}`).show();
 
         $.get(url)
             // With that done, add the note information to the page
@@ -32,9 +36,9 @@ $(document).ready(() => {
                 // If there's a note in the article
                 if (data.note) {
                     // Place the title of the note in the title input
-                    $("#titleinput2").val(data.note.title);
+                    $(".titleinput2").text(data.note.title);
                     // Place the body of the note in the body textarea
-                    $("#bodyinput2").val(data.note.body);
+                    $(".bodyinput2").text(data.note.body);
                 };
             });
     });
@@ -80,10 +84,5 @@ $(document).ready(() => {
         // })
     });
 
-
-    function empty(stringId) {
-        console.log(stringId)
-        $(stringId).empty();
-    }
 
 });
