@@ -1,47 +1,42 @@
 <div class='articles'>
     {{#each articles}}
-    <div class='card card-article' data-id='{{this.id}}'>
+    <div class='row'>
+        <div class='col'>
+            <div class='card card-article' data-id='{{this.id}}'>
 
-        <a class='art-link' href='{{this.link}}'>
-            <div class='card-header'>
-                <h4 class='art-headline'> {{this.headline}} </h4>
+                <a class='art-link' href='{{this.link}}'>
+                    <div class='card-header'>
+                        <h4 class='art-headline'> {{this.headline}} </h4>
+                    </div>
+                </a>
+                <div class='card-body art-sum'> {{this.summary}}
+                    <br>
+                    <button data-article-id='{{this.id}}' id='add-note-btn'>Notes</button>
+                </div>
             </div>
-        </a>
-        <div class='card-body art-sum'> {{this.summary}}
-            <br>
-            <button data-id='{{this.id}}' id='add-note-btn'>Add Note</button>
         </div>
     </div>
 
     {{!-- Notes div --}}
-    <div class="row noteDiv" data-id='{{this.id}}'>
+    <div class="row noteDiv" data-noteDiv-id='{{this.id}}'>
 
         <div class="col-md-4 mx-auto ">
 
             <div class='card'>
-
                 <div class='card-header'>{{this.headline}}</div>
-
-                <div class='card-body'>
-
-                    <div class="savedNotes">
-                        <div class='titleinput2'></div>
-                        <div class='bodyinput2'></div>
-                    </div>
+                <div class='card-body savedNotes'>
+                    <div class='bodyoutput'></div>
 
                     <div class='notes'>
-                        <input id='titleinput' name='title' placeholder='Note Title' />
                         <textarea id='bodyinput' name='body' placeholder='Notes'></textarea>
-                        <button type='button' data-id='{{this.id}}' id='save-note-btn'>Save Note</button>
-
+                        <button type='button' data-close-id='{{this.id}}' id='close-note-btn' style="float:right;">Close
+                            Note</button>
+                        <button type='button' data-save-id='{{this.id}}' id='save-note-btn' style="float:right;">Save
+                            Note</button>
                     </div>
                 </div>
-
             </div>
         </div>
-
     </div>
-
+    {{/each}}
 </div>
-
-{{/each}}
