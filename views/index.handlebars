@@ -1,5 +1,6 @@
 <div class='articles'>
     {{#each articles}}
+    {{!-- <div class='articles'> --}}
     <div class='row'>
         <div class='col'>
             <div class='card card-article' data-id='{{this.id}}'>
@@ -19,7 +20,6 @@
 
     {{!-- Notes div --}}
     <div class="row noteDiv" data-noteDiv-id='{{this.id}}'>
-
         <div class="col-md-4 mx-auto ">
 
             <div class='card'>
@@ -38,5 +38,6 @@
             </div>
         </div>
     </div>
+    {{!-- </div> --}}
     {{/each}}
 </div>
