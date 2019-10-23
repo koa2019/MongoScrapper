@@ -26,18 +26,16 @@
                 <div class='card-header'>{{this.headline}}</div>
                 <div class='card-body savedNotes'>
                     <div class='bodyoutput'></div>
-
-                    <div class='notes'>
-                        <textarea id='bodyinput' name='body' placeholder='Notes'></textarea>
-                        <button type='button' data-close-id='{{this.id}}' id='close-note-btn' style="float:right;">Close
-                            Note</button>
-                        <button type='button' data-save-id='{{this.id}}' id='save-note-btn' style="float:right;">Save
-                            Note</button>
-                    </div>
+                </div>
+                <div class='notes'>
+                    <textarea id='bodyinput' name='body' placeholder='Notes'></textarea>
+                    <button type='button' data-close-id='{{this.id}}' id='close-note-btn' style="float:right;">Close Note</button>
+                    <button type='button' data-save-id='{{this.id}}' id='save-note-btn' style="float:right;">Save Note</button>
                 </div>
             </div>
         </div>
     </div>
-    {{!-- </div> --}}
-    {{/each}}
+</div>
+{{!-- </div> --}}
+{{/each}}
 </div>

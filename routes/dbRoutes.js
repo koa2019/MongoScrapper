@@ -74,8 +74,6 @@ module.exports = function (app) {
 
         db.Article.find({})
             // handlebars renders needs page & a object
-            // .then(dbArticle => res.json(dbArticle))
-            // .then(dbArticle => res.render('index', res.json(dbArticle)))
             .then(dbArticle => { res.render('index', { articles: dbArticle }) })
             .catch(err => res.json(err));
     });
@@ -95,7 +93,9 @@ module.exports = function (app) {
 
         console.log(req.body.body);
         if (!req.body.body || req.body.body === '') {
-            return res.json(err);
+            // return res.send('Note.body can not be empty');
+            // return res.sendStatus(500);
+            return res.send(err);
         }
         else {
             // create a new Note with data from req.body

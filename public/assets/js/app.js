@@ -55,8 +55,6 @@ $(document).ready(() => {
         let bodyInput = $('#bodyinput').val().trim();
         console.log(bodyInput);
 
-        // const targetDiv = '[data-noteDiv-id=' + thisId + ']';
-        // $(`.noteDiv${targetDiv}`).hide();
         const selector2 = ".noteDiv[data-noteDiv-id=" + thisId + "]";
         // $(selector2).hide();
 
@@ -77,6 +75,7 @@ $(document).ready(() => {
                 // $(".bodyoutput").text(response.note);
             }).catch(err => {
                 console.log(err);
+                console.log('Note.body can not be empty');
                 $(".bodyoutput").text('Note Not Saved. Note Can Not Be Empty.');
             });
 
