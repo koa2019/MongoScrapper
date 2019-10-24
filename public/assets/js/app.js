@@ -80,9 +80,9 @@ $(document).ready(() => {
             });
 
         // reset textarea to empty string
-        $("#bodyinput").val("");
+        // $("#bodyinput").val("");
         // bodyInput.val('');
-        // $("#bodyinput").empty();
+        $("#bodyinput").empty();
     });
 
     // EventListener for note close button
