@@ -1,6 +1,12 @@
 # MongoScrapper
-# Psuedo
 
+# Run instructions
+* Download repo from Github
+* In root folder of repo, install npm packages 'npm install'
+* In terminal start express app by typing 'npm start'
+* Terminal will confirm connection & brower will be listening on http://localhost:3000/
+
+# App Psuedo
 * require dependencies
     * cheerio - parsing HTML & finding html elements.
     * axios for front end ajax calls.
