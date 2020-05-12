@@ -3,6 +3,7 @@
 # Run instructions
 * Download repo from Github
 * In root folder of repo, install npm packages 'npm install'
+* In separate new terminal start mongodb 'mongo'
 * In terminal start express app by typing 'npm start'
 * Terminal will confirm connection & brower will be listening on http://localhost:3000/
 
