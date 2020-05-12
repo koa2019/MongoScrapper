@@ -5,18 +5,15 @@ var express = require('express');
 var exphbs = require("express-handlebars");
 var logger = require('morgan');
 var mongoose = require('mongoose');
-
-
-// necessary for scraping html parsing & scraping
-var axios = require('axios');
-var cheerio = require('cheerio');
+var axios = require('axios'); // necessary for scraping html parsing & scraping
+var cheerio = require('cheerio'); // necessary for scraping html parsing & scraping
 
 // require all models in model folder. Must have an index.js to require in any models
 var db = require('./models');
 
 // set PORT for server
 // Heroku needs process.env.PORT
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 8000;
 
 // initialize an instance of express server app
 var app = express();
@@ -40,14 +37,13 @@ app.use(express.static("public"));
 // If deployed, use the deployed database, connect mongoose to remote mongolab database.
 // Otherwise use the local mongoHeadlines database
 var MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/mongoHeadlines';
-// mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
-// .then(() => {
-//     console.log("Connection worked")
-// }).catch ((err)=> {
-//     console.log("there is an err", err)
-// });
-
-mongoose.connect(MONGODB_URI);
+console.log(MONGODB_URI)
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
+.then(() => {
+    console.log("Mongoose Connection worked")
+}).catch ((err)=> {
+    console.log("there is an mongodb err", err)
+});
 
 
 /////////  ROUTES  //////// 
